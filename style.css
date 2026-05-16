@@ -1,15 +1,19 @@
-/* Design tokens */
+/* Design tokens — paleta da marca */
 :root {
-    --color-primary: #059669;
-    --color-primary-dark: #047857;
-    --color-primary-light: #d1fae5;
-    --color-accent: #0d9488;
-    --color-text: #333;
-    --color-text-muted: #4b5563;
-    --color-heading: #111827;
-    --color-bg: #ffffff;
-    --color-bg-muted: #f9fafb;
-    --color-footer: #111827;
+    --color-brown: #4B371E;
+    --color-olive: #54582F;
+    --color-cream: #F9F9F9;
+    --color-primary: var(--color-olive);
+    --color-primary-dark: var(--color-brown);
+    --color-primary-light: #e8e9e2;
+    --color-accent: var(--color-brown);
+    --color-text: #3d3428;
+    --color-text-muted: #5e574c;
+    --color-heading: var(--color-brown);
+    --color-bg: var(--color-cream);
+    --color-bg-muted: #f0f0ee;
+    --color-bg-elevated: #ffffff;
+    --color-footer: var(--color-brown);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     --radius-lg: 16px;
@@ -38,6 +42,7 @@ body {
     font-family: var(--font-sans);
     line-height: 1.6;
     color: var(--color-text);
+    background: var(--color-cream);
     overflow-x: hidden;
     padding-top: var(--header-height);
 }
@@ -99,9 +104,9 @@ address {
     right: 0;
     z-index: 1000;
     height: var(--header-height);
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(249, 249, 249, 0.95);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(75, 55, 30, 0.08);
     transition: box-shadow var(--transition);
 }
 
@@ -206,8 +211,8 @@ address {
         flex-direction: column;
         align-items: stretch;
         padding: 24px;
-        background: white;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        background: var(--color-cream);
+        border-bottom: 1px solid rgba(75, 55, 30, 0.1);
         box-shadow: var(--shadow-md);
         transform: translateY(-120%);
         opacity: 0;
@@ -252,7 +257,7 @@ address {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg) 50%, #ccfbf1 100%);
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-cream) 50%, var(--color-bg-muted) 100%);
     margin-top: calc(-1 * var(--header-height));
     padding-top: var(--header-height);
 }
@@ -273,7 +278,7 @@ address {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.9));
+    background: linear-gradient(to bottom, rgba(249, 249, 249, 0.92), rgba(249, 249, 249, 0.75), rgba(249, 249, 249, 0.92));
 }
 
 .hero-content {
@@ -296,7 +301,7 @@ address {
 
 .hero-subtitle {
     font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-    color: #374151;
+    color: var(--color-text-muted);
     margin-bottom: 32px;
     max-width: 672px;
     margin-left: auto;
@@ -339,7 +344,7 @@ address {
 }
 
 .btn-secondary {
-    background: white;
+    background: var(--color-bg-elevated);
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
 }
@@ -403,7 +408,7 @@ address {
 .about-image-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #34d399, #14b8a6);
+    background: linear-gradient(135deg, var(--color-olive), var(--color-brown));
     border-radius: var(--radius-xl);
     transform: rotate(3deg);
 }
@@ -491,9 +496,10 @@ address {
 }
 
 .service-card {
-    background: var(--color-bg);
+    background: var(--color-bg-elevated);
     padding: 32px;
     border-radius: var(--radius-lg);
+    border: 1px solid rgba(75, 55, 30, 0.06);
     box-shadow: var(--shadow-md);
     transition: transform var(--transition), box-shadow var(--transition);
 }
@@ -515,14 +521,14 @@ address {
     color: white;
 }
 
-.gradient-emerald { background: linear-gradient(135deg, #10b981, #14b8a6); }
-.gradient-teal { background: linear-gradient(135deg, #14b8a6, #06b6d4); }
-.gradient-rose { background: linear-gradient(135deg, #f43f5e, #ec4899); }
-.gradient-amber { background: linear-gradient(135deg, #f59e0b, #f97316); }
-.gradient-purple { background: linear-gradient(135deg, #a855f7, #8b5cf6); }
-.gradient-indigo { background: linear-gradient(135deg, #6366f1, #3b82f6); }
-.gradient-instagram { background: linear-gradient(135deg, #ec4899, #a855f7); }
-.gradient-facebook { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.gradient-emerald { background: linear-gradient(135deg, var(--color-olive), var(--color-brown)); }
+.gradient-teal { background: linear-gradient(135deg, #626842, var(--color-olive)); }
+.gradient-rose { background: linear-gradient(135deg, var(--color-brown), #3d2b15); }
+.gradient-amber { background: linear-gradient(135deg, var(--color-olive), #626842); }
+.gradient-purple { background: linear-gradient(135deg, var(--color-brown), var(--color-olive)); }
+.gradient-indigo { background: linear-gradient(135deg, #626842, var(--color-brown)); }
+.gradient-instagram { background: linear-gradient(135deg, var(--color-olive), var(--color-brown)); }
+.gradient-facebook { background: linear-gradient(135deg, var(--color-brown), var(--color-olive)); }
 
 .service-title {
     font-size: 1.5rem;
@@ -549,18 +555,19 @@ address {
 }
 
 .testimonial-card {
-    background: linear-gradient(135deg, var(--color-primary-light), #ccfbf1);
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-bg-muted));
     padding: 32px;
     border-radius: var(--radius-lg);
     position: relative;
     margin: 0;
+    border: 1px solid rgba(75, 55, 30, 0.06);
 }
 
 .quote-icon {
     position: absolute;
     top: 24px;
     right: 24px;
-    color: #a7f3d0;
+    color: rgba(84, 88, 47, 0.25);
 }
 
 .testimonial-header {
@@ -577,7 +584,7 @@ address {
     align-items: center;
     justify-content: center;
     margin-right: 16px;
-    border: 4px solid white;
+    border: 4px solid var(--color-bg-elevated);
     box-shadow: var(--shadow-md);
     background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     color: white;
@@ -605,12 +612,12 @@ address {
 }
 
 .star {
-    color: #fbbf24;
+    color: #c9a227;
     font-size: 1.25rem;
 }
 
 .testimonial-content {
-    color: #374151;
+    color: var(--color-text-muted);
     line-height: 1.7;
     font-style: italic;
     margin: 0;
@@ -639,7 +646,7 @@ address {
 }
 
 .contact-card {
-    background: var(--color-bg);
+    background: var(--color-bg-elevated);
     padding: 24px;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
@@ -685,7 +692,7 @@ address {
 }
 
 .social-card {
-    background: var(--color-bg);
+    background: var(--color-bg-elevated);
     padding: 24px;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
@@ -728,8 +735,9 @@ address {
 }
 
 .contact-cta {
-    background: linear-gradient(135deg, var(--color-primary-light), #ccfbf1);
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-bg-muted));
     padding: 48px 32px;
+    border: 1px solid rgba(75, 55, 30, 0.06);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     display: flex;
@@ -778,14 +786,14 @@ address {
 .footer-title {
     font-size: 1.5rem;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, #34d399, #2dd4bf);
+    background: linear-gradient(135deg, #d4cfc4, var(--color-cream));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .footer-text {
-    color: #9ca3af;
+    color: rgba(249, 249, 249, 0.75);
     line-height: 1.7;
 }
 
@@ -800,26 +808,26 @@ address {
 
 .footer-links li {
     margin-bottom: 8px;
-    color: #9ca3af;
+    color: rgba(249, 249, 249, 0.7);
 }
 
 .footer-links a {
-    color: #9ca3af;
+    color: rgba(249, 249, 249, 0.7);
     text-decoration: none;
 }
 
 .footer-links a:hover {
-    color: #34d399;
+    color: var(--color-cream);
 }
 
 .footer-bottom {
-    border-top: 1px solid #1f2937;
+    border-top: 1px solid rgba(249, 249, 249, 0.15);
     padding-top: 32px;
     text-align: center;
 }
 
 .footer-love {
-    color: #9ca3af;
+    color: rgba(249, 249, 249, 0.75);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -828,22 +836,22 @@ address {
 }
 
 .footer-love svg {
-    color: #10b981;
+    color: #d4cfc4;
 }
 
 .footer-copyright {
-    color: #6b7280;
+    color: rgba(249, 249, 249, 0.55);
     font-size: 0.875rem;
 }
 
 .footer-legal {
     margin-top: 8px;
     font-size: 0.8125rem;
-    color: #6b7280;
+    color: rgba(249, 249, 249, 0.55);
 }
 
 .footer-legal a {
-    color: #9ca3af;
+    color: rgba(249, 249, 249, 0.7);
 }
 
 /* WhatsApp float */
@@ -895,7 +903,7 @@ address {
 
 .modal-content {
     position: relative;
-    background: white;
+    background: var(--color-bg-elevated);
     padding: 32px;
     border-radius: var(--radius-lg);
     max-width: 480px;
