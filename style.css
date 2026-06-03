@@ -282,7 +282,7 @@ address {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(249, 249, 249, 0.92), rgba(249, 249, 249, 0.75), rgba(249, 249, 249, 0.92));
+    background: linear-gradient(to bottom, rgba(249, 249, 249, 0.72), rgba(249, 249, 249, 0.55), rgba(249, 249, 249, 0.72));
 }
 
 .hero-content {
