@@ -20,7 +20,9 @@
     --radius-xl: 24px;
     --radius-full: 9999px;
     --container-max: 1200px;
-    --header-height: 72px;
+    --header-height: clamp(68px, 10vw, 88px);
+    --logo-header-height: clamp(40px, 8.5vw, 64px);
+    --logo-footer-size: clamp(96px, 16vw, 140px);
     --transition: 0.3s ease;
     --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     --font-brand: 'La Charly', cursive;
@@ -124,14 +126,39 @@ address {
 }
 
 .site-logo {
-    font-family: var(--font-brand);
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 400;
-    color: var(--color-olive);
+    display: flex;
+    align-items: center;
+    flex-shrink: 1;
+    min-width: 0;
     text-decoration: none;
-    flex-shrink: 0;
-    line-height: 1.1;
-    letter-spacing: 0.01em;
+    line-height: 0;
+}
+
+.site-logo img {
+    display: block;
+    height: var(--logo-header-height);
+    width: auto;
+    max-width: min(280px, 52vw);
+    object-fit: contain;
+    object-position: left center;
+}
+
+@media (min-width: 768px) {
+    .site-logo {
+        flex-shrink: 0;
+    }
+
+    .site-logo img {
+        height: clamp(52px, 5.5vw, 64px);
+        max-width: min(360px, 32vw);
+    }
+}
+
+@media (min-width: 1024px) {
+    .site-logo img {
+        height: 64px;
+        max-width: 380px;
+    }
 }
 
 .site-nav {
@@ -394,7 +421,7 @@ address {
 
 /* About */
 .about-section {
-    padding: 96px 0;
+    padding: clamp(48px, 10vw, 96px) 0;
     background: var(--color-bg);
 }
 
@@ -477,7 +504,7 @@ address {
 
 /* Services */
 .services-section {
-    padding: 96px 0;
+    padding: clamp(48px, 10vw, 96px) 0;
     background: linear-gradient(to bottom, var(--color-bg-muted), var(--color-bg));
 }
 
@@ -548,7 +575,7 @@ address {
 
 /* Testimonials */
 .testimonials-section {
-    padding: 96px 0;
+    padding: clamp(48px, 10vw, 96px) 0;
     background: var(--color-bg);
 }
 
@@ -633,7 +660,7 @@ address {
 
 /* Location */
 .location-section {
-    padding: 96px 0;
+    padding: clamp(48px, 10vw, 96px) 0;
     background: linear-gradient(to bottom, var(--color-bg-muted), var(--color-primary-light));
 }
 
@@ -740,7 +767,7 @@ address {
 
 .contact-cta {
     background: linear-gradient(135deg, var(--color-primary-light), var(--color-bg-muted));
-    padding: 48px 32px;
+    padding: clamp(32px, 5vw, 48px);
     border: 1px solid rgba(75, 55, 30, 0.06);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
@@ -748,7 +775,13 @@ address {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    min-height: 400px;
+    min-height: auto;
+}
+
+@media (min-width: 768px) {
+    .contact-cta {
+        min-height: 400px;
+    }
 }
 
 .contact-cta-title {
@@ -777,7 +810,7 @@ address {
 .footer {
     background: var(--color-footer);
     color: white;
-    padding: 48px 0;
+    padding: clamp(32px, 8vw, 48px) 0;
 }
 
 .footer-grid {
@@ -795,6 +828,20 @@ address {
     color: var(--color-cream);
     line-height: 1.1;
     letter-spacing: 0.01em;
+}
+
+.footer-column--brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    width: var(--logo-footer-size);
+    height: auto;
+    aspect-ratio: 1;
+    margin-bottom: 20px;
+    object-fit: contain;
 }
 
 .footer-text {
@@ -876,6 +923,15 @@ address {
     box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
     transition: transform var(--transition), box-shadow var(--transition);
     text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .whatsapp-float {
+        bottom: 16px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+    }
 }
 
 .whatsapp-float:hover {
@@ -1056,5 +1112,50 @@ address {
 
     .map-container {
         height: 400px;
+    }
+
+    .about-grid {
+        gap: 32px;
+    }
+
+    .about-image {
+        height: 350px;
+    }
+
+    .section-header {
+        margin-bottom: 32px;
+    }
+
+    .services-grid,
+    .testimonials-grid {
+        gap: 24px;
+    }
+
+    .service-card,
+    .testimonial-card,
+    .contact-card {
+        padding: 20px;
+    }
+
+    .btn {
+        padding: 14px 28px;
+        font-size: 0.95rem;
+    }
+
+    .btn-cta {
+        width: 100%;
+    }
+
+    .contact-cta-title {
+        font-size: 1.5rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-column--brand {
+        align-items: center;
+        text-align: center;
     }
 }
