@@ -158,6 +158,113 @@ function initScrollIndicator() {
     });
 }
 
+function initTestimonialsCarousel() {
+    const carousel = document.querySelector('.testimonial-carousel');
+    if (!carousel) return;
+
+    const track = carousel.querySelector('.testimonial-carousel__track');
+    const items = Array.from(carousel.querySelectorAll('[data-carousel-item]'));
+    const prevBtn = carousel.querySelector('.carousel-btn--prev');
+    const nextBtn = carousel.querySelector('.carousel-btn--next');
+    const indicatorContainer = carousel.querySelector('.carousel-indicators');
+
+    if (!track || !items.length || !prevBtn || !nextBtn || !indicatorContainer) return;
+
+    let activeIndex = 0;
+    let autoplayId = null;
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isTouchDragging = false;
+    const swipeThreshold = 60;
+
+    const setActiveIndex = (index) => {
+        activeIndex = ((index % items.length) + items.length) % items.length;
+        track.style.transform = `translateX(-${activeIndex * 100}%)`;
+        indicatorContainer.querySelectorAll('button').forEach((button, idx) => {
+            button.setAttribute('aria-selected', String(idx === activeIndex));
+        });
+    };
+
+    const resetAutoplay = () => {
+        if (prefersReducedMotion) return;
+        if (autoplayId) clearInterval(autoplayId);
+        autoplayId = setInterval(() => setActiveIndex(activeIndex + 1), 7000);
+    };
+
+    const handleTouchStart = (event) => {
+        if (event.touches.length !== 1) return;
+        touchStartX = event.touches[0].clientX;
+        touchCurrentX = touchStartX;
+        isTouchDragging = true;
+        track.style.transition = 'none';
+        if (autoplayId) clearInterval(autoplayId);
+    };
+
+    const handleTouchMove = (event) => {
+        if (!isTouchDragging || event.touches.length !== 1) return;
+        touchCurrentX = event.touches[0].clientX;
+        const deltaX = touchCurrentX - touchStartX;
+        track.style.transform = `translateX(calc(-${activeIndex * 100}% + ${deltaX}px))`;
+    };
+
+    const handleTouchEnd = () => {
+        if (!isTouchDragging) return;
+        isTouchDragging = false;
+        const deltaX = touchCurrentX - touchStartX;
+        track.style.transition = 'transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+
+        if (Math.abs(deltaX) > swipeThreshold) {
+            if (deltaX < 0) {
+                setActiveIndex(activeIndex + 1);
+            } else {
+                setActiveIndex(activeIndex - 1);
+            }
+        } else {
+            setActiveIndex(activeIndex);
+        }
+
+        resetAutoplay();
+    };
+
+    items.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-label', `Depoimento ${index + 1}`);
+        button.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+        button.addEventListener('click', () => {
+            setActiveIndex(index);
+            resetAutoplay();
+        });
+        indicatorContainer.appendChild(button);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        setActiveIndex(activeIndex - 1);
+        resetAutoplay();
+    });
+    nextBtn.addEventListener('click', () => {
+        setActiveIndex(activeIndex + 1);
+        resetAutoplay();
+    });
+
+    if (!prefersReducedMotion) {
+        resetAutoplay();
+        carousel.addEventListener('mouseenter', () => {
+            if (autoplayId) clearInterval(autoplayId);
+        });
+        carousel.addEventListener('mouseleave', () => {
+            resetAutoplay();
+        });
+    }
+
+    carousel.addEventListener('touchstart', handleTouchStart, { passive: true });
+    carousel.addEventListener('touchmove', handleTouchMove, { passive: true });
+    carousel.addEventListener('touchend', handleTouchEnd);
+    carousel.addEventListener('touchcancel', handleTouchEnd);
+
+    setActiveIndex(0);
+}
+
 function initRipple() {
     document.querySelectorAll('.btn').forEach((button) => {
         button.addEventListener('click', (e) => {
@@ -258,5 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollIndicator();
     initRipple();
     initStatCounters();
+    initTestimonialsCarousel();
     initPrivacyModal();
 });

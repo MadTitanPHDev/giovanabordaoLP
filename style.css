@@ -604,10 +604,22 @@ address {
     background: var(--color-bg);
 }
 
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
+.testimonial-carousel {
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y;
+}
+
+.testimonial-carousel__track {
+    display: flex;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+[data-carousel-item] {
+    flex: 0 0 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .testimonial-card {
@@ -617,6 +629,94 @@ address {
     position: relative;
     margin: 0;
     border: 1px solid rgba(75, 55, 30, 0.06);
+    min-height: 360px;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+}
+
+.testimonial-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.carousel-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(75, 55, 30, 0.15);
+    background: white;
+    color: var(--color-primary-dark);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition), transform var(--transition), border-color var(--transition);
+}
+
+.carousel-btn:hover,
+.carousel-btn:focus-visible {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    transform: scale(1.05);
+}
+
+.carousel-indicators {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(75, 55, 30, 0.25);
+    cursor: pointer;
+    transition: transform var(--transition), background var(--transition);
+}
+
+.carousel-indicators button[aria-selected="true"] {
+    background: var(--color-primary);
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .testimonial-card {
+        padding: 24px;
+        min-height: auto;
+    }
+
+    .carousel-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .testimonial-carousel__controls {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 640px) {
+    .testimonial-carousel__track {
+        gap: 16px;
+    }
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .testimonial-card {
+        padding: 20px;
+    }
 }
 
 .quote-icon {
