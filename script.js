@@ -180,7 +180,7 @@ function initTestimonialsCarousel() {
     const swipeThreshold = 50;
     const transitionValue = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
 
-    const getSlidesPerView = () => (window.innerWidth >= 1024 ? 2 : 1);
+    const getSlidesPerView = () => 1;
 
     const getMaxIndex = () => Math.max(0, items.length - getSlidesPerView());
 

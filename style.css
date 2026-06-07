@@ -608,7 +608,7 @@ address {
 .testimonial-carousel {
     position: relative;
     width: 100%;
-    max-width: var(--container-max);
+    max-width: min(100%, 680px);
     margin: 0 auto;
     padding: 0 24px;
     box-sizing: border-box;
@@ -633,8 +633,9 @@ address {
 
 [data-carousel-item] {
     flex: 0 0 auto;
+    display: flex;
     box-sizing: border-box;
-    padding: 0 4px;
+    padding: 0;
 }
 
 .testimonial-card {
@@ -785,8 +786,12 @@ address {
 }
 
 @media (min-width: 768px) {
-    [data-carousel-item] {
-        padding: 0 8px;
+    .testimonial-carousel {
+        max-width: min(100%, 720px);
+    }
+
+    .testimonial-card {
+        padding: 32px 36px;
     }
 
     .avatar {
@@ -795,20 +800,29 @@ address {
         font-size: 1.125rem;
     }
 
+    .testimonial-name {
+        font-size: 1.125rem;
+    }
+
     .quote-icon {
         width: 48px;
         height: 48px;
-        top: 24px;
-        right: 24px;
+        top: 28px;
+        right: 28px;
     }
 
     .testimonial-content p {
-        font-size: 1rem;
+        font-size: 1.0625rem;
+        line-height: 1.8;
     }
 
     .carousel-btn {
         width: 48px;
         height: 48px;
+    }
+
+    .testimonial-carousel__controls {
+        margin-top: 32px;
     }
 }
 
