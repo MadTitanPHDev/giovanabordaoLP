@@ -220,9 +220,11 @@
                     <h2 id="testimonials-title" class="section-title">O Que Dizem Meus Pacientes</h2>
                     <p class="section-subtitle">Histórias reais de transformação e sucesso</p>
                 </div>
+            </div>
 
-                <div class="testimonial-carousel" aria-roledescription="carousel">
-                    <div class="testimonial-carousel__track">
+            <div class="testimonial-carousel container" aria-roledescription="carousel">
+                <div class="testimonial-carousel__viewport">
+                    <div class="testimonial-carousel__track" id="testimonials-track">
                         <figure class="testimonial-card animate-on-scroll" data-carousel-item>
                             <svg class="quote-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
@@ -324,12 +326,16 @@
                             </blockquote>
                         </figure>
                     </div>
+                </div>
 
-                    <div class="testimonial-carousel__controls">
-                        <button type="button" class="carousel-btn carousel-btn--prev" aria-label="Depoimento anterior">←</button>
-                        <div class="carousel-indicators" role="tablist"></div>
-                        <button type="button" class="carousel-btn carousel-btn--next" aria-label="Próximo depoimento">→</button>
-                    </div>
+                <div class="testimonial-carousel__controls">
+                    <button type="button" class="carousel-btn carousel-btn--prev" aria-label="Depoimento anterior" aria-controls="testimonials-track">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <div class="carousel-indicators" role="tablist" aria-label="Depoimentos"></div>
+                    <button type="button" class="carousel-btn carousel-btn--next" aria-label="Próximo depoimento" aria-controls="testimonials-track">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
                 </div>
             </div>
         </section>

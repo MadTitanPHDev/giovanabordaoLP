@@ -162,24 +162,65 @@ function initTestimonialsCarousel() {
     const carousel = document.querySelector('.testimonial-carousel');
     if (!carousel) return;
 
+    const viewport = carousel.querySelector('.testimonial-carousel__viewport');
     const track = carousel.querySelector('.testimonial-carousel__track');
     const items = Array.from(carousel.querySelectorAll('[data-carousel-item]'));
     const prevBtn = carousel.querySelector('.carousel-btn--prev');
     const nextBtn = carousel.querySelector('.carousel-btn--next');
     const indicatorContainer = carousel.querySelector('.carousel-indicators');
 
-    if (!track || !items.length || !prevBtn || !nextBtn || !indicatorContainer) return;
+    if (!viewport || !track || !items.length || !prevBtn || !nextBtn || !indicatorContainer) return;
 
     let activeIndex = 0;
     let autoplayId = null;
     let touchStartX = 0;
     let touchCurrentX = 0;
     let isTouchDragging = false;
-    const swipeThreshold = 60;
+    let slideWidth = 0;
+    const swipeThreshold = 50;
+    const transitionValue = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
 
-    const setActiveIndex = (index) => {
-        activeIndex = ((index % items.length) + items.length) % items.length;
-        track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    const getSlidesPerView = () => (window.innerWidth >= 1024 ? 2 : 1);
+
+    const getMaxIndex = () => Math.max(0, items.length - getSlidesPerView());
+
+    const buildIndicators = () => {
+        indicatorContainer.innerHTML = '';
+        const pageCount = getMaxIndex() + 1;
+
+        for (let index = 0; index < pageCount; index += 1) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.setAttribute('aria-label', `Depoimento ${index + 1}`);
+            button.setAttribute('aria-selected', index === activeIndex ? 'true' : 'false');
+            button.addEventListener('click', () => {
+                setActiveIndex(index);
+                resetAutoplay();
+            });
+            indicatorContainer.appendChild(button);
+        }
+    };
+
+    const updateSlideMetrics = () => {
+        slideWidth = viewport.clientWidth / getSlidesPerView();
+
+        items.forEach((item) => {
+            item.style.width = `${slideWidth}px`;
+        });
+
+        if (activeIndex > getMaxIndex()) {
+            activeIndex = getMaxIndex();
+        }
+
+        buildIndicators();
+        setActiveIndex(activeIndex, false);
+    };
+
+    const setActiveIndex = (index, animate = true) => {
+        activeIndex = Math.min(Math.max(index, 0), getMaxIndex());
+        track.style.transition = animate ? transitionValue : 'none';
+        track.style.transform = `translate3d(-${activeIndex * slideWidth}px, 0, 0)`;
+
         indicatorContainer.querySelectorAll('button').forEach((button, idx) => {
             button.setAttribute('aria-selected', String(idx === activeIndex));
         });
@@ -188,7 +229,9 @@ function initTestimonialsCarousel() {
     const resetAutoplay = () => {
         if (prefersReducedMotion) return;
         if (autoplayId) clearInterval(autoplayId);
-        autoplayId = setInterval(() => setActiveIndex(activeIndex + 1), 7000);
+        autoplayId = setInterval(() => {
+            setActiveIndex(activeIndex >= getMaxIndex() ? 0 : activeIndex + 1);
+        }, 7000);
     };
 
     const handleTouchStart = (event) => {
@@ -204,39 +247,23 @@ function initTestimonialsCarousel() {
         if (!isTouchDragging || event.touches.length !== 1) return;
         touchCurrentX = event.touches[0].clientX;
         const deltaX = touchCurrentX - touchStartX;
-        track.style.transform = `translateX(calc(-${activeIndex * 100}% + ${deltaX}px))`;
+        track.style.transform = `translate3d(${-activeIndex * slideWidth + deltaX}px, 0, 0)`;
     };
 
     const handleTouchEnd = () => {
         if (!isTouchDragging) return;
         isTouchDragging = false;
         const deltaX = touchCurrentX - touchStartX;
-        track.style.transition = 'transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+        track.style.transition = transitionValue;
 
         if (Math.abs(deltaX) > swipeThreshold) {
-            if (deltaX < 0) {
-                setActiveIndex(activeIndex + 1);
-            } else {
-                setActiveIndex(activeIndex - 1);
-            }
+            setActiveIndex(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
         } else {
             setActiveIndex(activeIndex);
         }
 
         resetAutoplay();
     };
-
-    items.forEach((_, index) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.setAttribute('aria-label', `Depoimento ${index + 1}`);
-        button.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
-        button.addEventListener('click', () => {
-            setActiveIndex(index);
-            resetAutoplay();
-        });
-        indicatorContainer.appendChild(button);
-    });
 
     prevBtn.addEventListener('click', () => {
         setActiveIndex(activeIndex - 1);
@@ -257,12 +284,13 @@ function initTestimonialsCarousel() {
         });
     }
 
-    carousel.addEventListener('touchstart', handleTouchStart, { passive: true });
-    carousel.addEventListener('touchmove', handleTouchMove, { passive: true });
-    carousel.addEventListener('touchend', handleTouchEnd);
-    carousel.addEventListener('touchcancel', handleTouchEnd);
+    viewport.addEventListener('touchstart', handleTouchStart, { passive: true });
+    viewport.addEventListener('touchmove', handleTouchMove, { passive: true });
+    viewport.addEventListener('touchend', handleTouchEnd);
+    viewport.addEventListener('touchcancel', handleTouchEnd);
 
-    setActiveIndex(0);
+    window.addEventListener('resize', debounce(updateSlideMetrics, 150));
+    updateSlideMetrics();
 }
 
 function initRipple() {
