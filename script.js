@@ -3,7 +3,7 @@
  */
 const SITE_CONFIG = {
     whatsapp: '5518996589306',
-    whatsappMessage: 'Olá, Giovana! Gostaria de agendar uma consulta.',
+    whatsappMessage: 'Olá, Giovanna! Gostaria de agendar uma consulta.',
     instagram: 'https://instagram.com/nutri.giovannabordao',
     email: 'giovannabordao@outlook.com'
 };
@@ -106,6 +106,22 @@ function initScrollAnimations() {
     );
 
     elements.forEach((el) => observer.observe(el));
+}
+
+function initHeroBackground() {
+    const heroBackground = document.querySelector('.hero-background');
+    const heroImage = document.querySelector('.hero-bg-main');
+    if (!heroBackground || !heroImage) return;
+
+    const markReady = () => heroBackground.classList.add('is-ready');
+
+    if (heroImage.complete && heroImage.naturalWidth > 0) {
+        markReady();
+        return;
+    }
+
+    heroImage.addEventListener('load', markReady, { once: true });
+    heroImage.addEventListener('error', markReady, { once: true });
 }
 
 function initParallax() {
@@ -383,6 +399,7 @@ function initPrivacyModal() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    initHeroBackground();
     initWhatsAppLinks();
     initSocialLinks();
     initHeader();
